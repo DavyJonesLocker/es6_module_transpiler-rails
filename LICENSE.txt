@@ -1,4 +1,4 @@
-Copyright (c) 2013 Brian Cardarella
+Copyright (c) 2013 DockYard
 
 MIT License
 
