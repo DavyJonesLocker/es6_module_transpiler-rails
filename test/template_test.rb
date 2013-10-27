@@ -14,6 +14,7 @@ var foo = function() {
 export default = foo;
 JS
     @source.rstrip!
+    @scope = Scope.new('foo')
   end
 
   after do
@@ -36,8 +37,7 @@ JS
     expected.rstrip!
 
     template = Tilt::ES6ModuleTranspilerTemplate.new { @source }
-    scope = Scope.new('foo')
-    template.render(scope).must_equal expected
+    template.render(@scope).must_equal expected
   end
 
   it 'transpiles es6 into global when set' do
@@ -56,7 +56,6 @@ JS
     expected.rstrip!
 
     template = Tilt::ES6ModuleTranspilerTemplate.new { @source }
-    scope = Scope.new('foo')
-    template.render(scope).must_equal expected
+    template.render(@scope).must_equal expected
   end
 end
