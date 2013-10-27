@@ -4,6 +4,8 @@ Transpile ES6 Modules in the Rails Asset Pipeline
 
 ## Installation ##
 
+**Node.js must be installed for the transpiling to happen**
+
 ```ruby
 gem 'es6_module_transpiler-rails'
 ```
