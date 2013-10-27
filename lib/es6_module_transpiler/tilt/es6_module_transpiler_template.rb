@@ -1,19 +1,23 @@
+require 'execjs'
+
 module Tilt
   class ES6ModuleTranspilerTemplate < Tilt::Template
     self.default_mime_type = 'application/javascript'
-    attr_reader :node
+
+    Node = ::ExecJS::ExternalRuntime.new(
+      name: 'Node.js (V8)',
+      command: ['nodejs', 'node'],
+      runner_path: File.expand_path('../../support/es6_node_runner.js', __FILE__),
+      encoding: 'UTF-8'
+    )
 
     def prepare
-      @node = ::ExecJS::ExternalRuntime.new(
-        name: 'Node.js (V8)',
-        command: ['nodejs', 'node'],
-        runner_path: File.expand_path('../../support/es6_node_runner.js', __FILE__),
-        encoding: 'UTF-8'
-      )
+      # intentionally left empty
+      # ExecJS requires this method to be defined
     end
 
     def evaluate(scope, locals, &block)
-      @output ||= @node.exec(generate_source(scope))
+      @output ||= Node.exec(generate_source(scope))
     end
 
     private
