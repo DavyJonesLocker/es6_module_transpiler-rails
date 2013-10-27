@@ -1,29 +1,59 @@
-# Es6ModuleTranspiler::Rails
+# Es6ModuleTranspiler-Rails #
 
-TODO: Write a gem description
+Transpile ES6 Modules in the Rails Asset Pipeline
 
-## Installation
+## Installation ##
 
-Add this line to your application's Gemfile:
+```ruby
+gem 'es6_module_transpiler-rails'
+```
 
-    gem 'es6_module_transpiler-rails'
+## Usage ##
 
-And then execute:
+Your modules will transpile are named based upon their directory
+nesting + filename, as long as the file has the `.es6` extension.
+For example, `app/assets/javascripts/controllers/fooController.js.es6`
 
-    $ bundle
+```js
+var fooController = function() {
+  console.log('fooController is in the house!')
+};
 
-Or install it yourself as:
+export default = fooController;
+```
 
-    $ gem install es6_module_transpiler-rails
+will compile to
 
-## Usage
+```js
+define("controllers/fooController", 
+  ["exports"],
+  function(__exports__) {
+    "use strict";
+    var fooController = function() {
+      console.log('fooController is in the house!')
+    };
 
-TODO: Write usage instructions here
+    __exports__["default"] = fooController;
+  });
+```
 
-## Contributing
+## Authors ##
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+[Brian Cardarella](http://twitter.com/bcardarella)
+
+[We are very thankful for the many contributors](https://github.com/dockyard/es6_module_transpiler-rails/graphs/contributors)
+
+## Versioning ##
+
+This gem follows [Semantic Versioning](http://semver.org)
+
+## Want to help? ##
+
+Please do! We are always looking to improve this gem.
+## Legal ##
+
+[DockYard](http://dockyard.com), LLC &copy; 2013
+
+[@dockyard](http://twitter.com/dockyard)
+
+[Licensed under the MIT license](http://www.opensource.org/licenses/mit-license.php)
