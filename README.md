@@ -6,6 +6,8 @@
 
 Transpile ES6 Modules in the Rails Asset Pipeline
 
+Uses [Square's ES6 Module Transpiler](https://github.com/square/es6-module-transpiler)
+
 ## Installation ##
 
 **Node.js must be installed for the transpiling to happen**
