@@ -1,4 +1,4 @@
-# Es6ModuleTranspiler-Rails #
+# ES6ModuleTranspiler-Rails #
 
 [![Build Status](https://secure.travis-ci.org/dockyard/es6_module_transpiler-rails.png?branch=master)](http://travis-ci.org/dockyard/es6_module_transpiler-rails)
 [![Dependency Status](https://gemnasium.com/dockyard/es6_module_transpiler-rails.png?travis)](https://gemnasium.com/dockyard/es6_module_transpiler-rails)
