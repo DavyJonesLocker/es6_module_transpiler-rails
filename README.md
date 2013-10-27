@@ -16,7 +16,7 @@ gem 'es6_module_transpiler-rails'
 
 ## Usage ##
 
-Your modules will transpile are named based upon their directory
+Your modules will transpile and are named based upon their directory
 nesting + filename, as long as the file has the `.es6` extension.
 For example, `app/assets/javascripts/controllers/fooController.js.es6`
 
@@ -28,7 +28,7 @@ var fooController = function() {
 export default = fooController;
 ```
 
-will compile to
+will compile to `/assets/controllers/fooController.js`
 
 ```js
 define("controllers/fooController", 
