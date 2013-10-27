@@ -1,4 +1,3 @@
-require 'byebug'
 require 'bundler/setup'
 require 'es6_module_transpiler/rails'
 
