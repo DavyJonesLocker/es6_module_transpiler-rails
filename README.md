@@ -39,6 +39,14 @@ define("controllers/fooController",
   });
 ```
 
+### Compiling ###
+
+By default your module will compile to an AMD. If you wish to compile it as a global just make the following switch:
+
+```ruby
+ES6ModuleTranspiler.compile_to = :global
+```
+
 ## Authors ##
 
 [Brian Cardarella](http://twitter.com/bcardarella)
