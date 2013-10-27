@@ -27,7 +27,7 @@ module Tilt
         var Compiler, compiler, output;
         Compiler = require("#{transpiler_path}").Compiler;
         compiler = new Compiler(#{::JSON.generate(data, quirks_mode: true)}, '#{scope.logical_path}');
-        return output = compiler.toAMD();
+        return output = compiler.#{ES6ModuleTranspiler.compile_to.to_sym == :global ? 'toGlobals' : 'toAMD'}();
       SOURCE
     end
   end

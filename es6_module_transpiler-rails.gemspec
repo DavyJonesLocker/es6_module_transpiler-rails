@@ -5,7 +5,7 @@ require 'es6_module_transpiler/rails/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "es6_module_transpiler-rails"
-  spec.version       = Es6ModuleTranspiler::Rails::VERSION
+  spec.version       = ES6ModuleTranspiler::Rails::VERSION
   spec.authors       = ["Brian Cardarella"]
   spec.email         = ["bcardarella@gmail.com"]
   spec.summary       = %q{ES6 Module Transpiler for Rails}
@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'execjs'
-  spec.add_development_dependency "bundler", "~> 1.4"
-  spec.add_development_dependency "rake"
+  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'tilt'
+  spec.add_development_dependency 'sprockets'
 end
