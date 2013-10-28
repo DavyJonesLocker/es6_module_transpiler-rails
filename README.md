@@ -33,7 +33,7 @@ export default = fooController;
 will compile to `/assets/controllers/fooController.js`
 
 ```js
-define("controllers/fooController", 
+define("controllers/fooController",
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -47,10 +47,12 @@ define("controllers/fooController",
 
 ### Compiling ###
 
-By default your module will compile to an AMD. If you wish to compile it as a global just make the following switch:
+By default your module will compile to an AMD. You can also compile it to globals or CommonJS by making the following switch:
 
 ```ruby
-ES6ModuleTranspiler.compile_to = :global
+ES6ModuleTranspiler.compile_to = :globals
+# or
+ES6ModuleTranspiler.compile_to = :cjs
 ```
 
 ## Authors ##
