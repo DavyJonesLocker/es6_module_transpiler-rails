@@ -40,8 +40,8 @@ JS
     template.render(@scope).must_equal expected
   end
 
-  it 'transpiles es6 into global when set' do
-    ES6ModuleTranspiler.compile_to = :global
+  it 'transpiles es6 into globals when set' do
+    ES6ModuleTranspiler.compile_to = :globals
 
     expected = <<-JS
 (function(__exports__) {
@@ -52,6 +52,23 @@ JS
 
   __exports__.foo = foo;
 })(window);
+JS
+    expected.rstrip!
+
+    template = Tilt::ES6ModuleTranspilerTemplate.new { @source }
+    template.render(@scope).must_equal expected
+  end
+
+  it 'transpiles es6 into CommonJS when set' do
+    ES6ModuleTranspiler.compile_to = :cjs
+
+    expected = <<-JS
+"use strict";
+var foo = function() {
+  console.log('bar');
+};
+
+exports["default"] = foo;
 JS
     expected.rstrip!
 

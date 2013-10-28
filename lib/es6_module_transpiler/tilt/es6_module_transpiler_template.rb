@@ -13,7 +13,7 @@ module Tilt
 
     def prepare
       # intentionally left empty
-      # ExecJS requires this method to be defined
+      # Tilt requires this method to be defined
     end
 
     def evaluate(scope, locals, &block)
@@ -31,8 +31,18 @@ module Tilt
         var Compiler, compiler, output;
         Compiler = require("#{transpiler_path}").Compiler;
         compiler = new Compiler(#{::JSON.generate(data, quirks_mode: true)}, '#{scope.logical_path}');
-        return output = compiler.#{ES6ModuleTranspiler.compile_to.to_sym == :global ? 'toGlobals' : 'toAMD'}();
+        return output = compiler.#{compiler_method}();
       SOURCE
+    end
+
+    def compiler_method
+      type = {
+        amd: 'AMD',
+        cjs: 'CJS',
+        globals: 'Globals'
+      }[ES6ModuleTranspiler.compile_to.to_sym]
+
+      "to#{type}"
     end
   end
 end
