@@ -13,7 +13,7 @@ module Tilt
 
     def prepare
       # intentionally left empty
-      # ExecJS requires this method to be defined
+      # Tilt requires this method to be defined
     end
 
     def evaluate(scope, locals, &block)
