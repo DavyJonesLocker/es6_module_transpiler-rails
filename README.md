@@ -55,6 +55,19 @@ ES6ModuleTranspiler.compile_to = :globals
 ES6ModuleTranspiler.compile_to = :cjs
 ```
 
+### Custom Module Prefix ###
+
+You can match module names based upon a pattern to apply a prefix to the
+name:
+
+```ruby
+ES6ModuleTranspiler.prefix_pattern = [/^(controllers|models|views|helpers|routes|router|store)/, 'app']
+```
+
+This would match names that start with the pattern and prepend with
+`app/`. For example, `controllers/fooController` would now be named
+`app/controllers/fooController`.
+
 ## Authors ##
 
 [Brian Cardarella](http://twitter.com/bcardarella)
