@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Brian Cardarella"]
   spec.email         = ["bcardarella@gmail.com"]
   spec.summary       = %q{ES6 Module Transpiler for Rails}
-  spec.description   = %q{Compile ES6 module in the asset pipeline}
+  spec.description   = %q{Compile ES6 modules in the asset pipeline}
   spec.homepage      = "https://github.com/dockyard/es6_module_transpiler-rails"
   spec.license       = "MIT"
 
