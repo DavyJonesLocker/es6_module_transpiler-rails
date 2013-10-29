@@ -68,6 +68,11 @@ This would match names that start with the pattern and prepend with
 `app/`. For example, `controllers/fooController` would now be named
 `app/controllers/fooController`.
 
+Note the path is the *logical path* for the asset. For example, if the
+path to your asset is
+`app/assets/javascripts/controllers/fooController.js.es6` the logical
+path is `controllers/fooController`.
+
 ## Authors ##
 
 [Brian Cardarella](http://twitter.com/bcardarella)
