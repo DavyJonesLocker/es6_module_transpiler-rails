@@ -36,8 +36,8 @@ module Tilt
     end
 
     def module_name(path)
-      if ES6ModuleTranspiler.prefix_pattern[0] === path
-        path = "#{ES6ModuleTranspiler.prefix_pattern[1]}/#{path}"
+      if prefix = ES6ModuleTranspiler.lookup_prefix(path)
+        path = "#{prefix}/#{path}"
       end
 
       path
