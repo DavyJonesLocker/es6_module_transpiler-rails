@@ -11,11 +11,25 @@ module ES6ModuleTranspiler
     @compile_to = target
   end
 
-  def self.prefix_pattern
-    @prefix_pattern || []
+  def self.prefix_patterns
+    @prefix_patterns ||= []
+  end
+
+  def self.prefix_patterns=(patterns)
+    @prefix_patterns = patterns
   end
 
   def self.prefix_pattern=(pattern)
-    @prefix_pattern = pattern
+    self.prefix_patterns = [pattern]
+  end
+
+  def self.add_prefix_pattern(pattern, prefix)
+    prefix_patterns << [pattern, prefix]
+  end
+
+  def self.lookup_prefix(path)
+    _, prefix = prefix_patterns.detect {|pattern, prefix| pattern =~ path }
+
+    prefix
   end
 end
