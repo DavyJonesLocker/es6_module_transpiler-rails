@@ -58,15 +58,17 @@ ES6ModuleTranspiler.compile_to = :cjs
 ### Custom Module Prefix ###
 
 You can match module names based upon a pattern to apply a prefix to the
-name:
+name. You can add multiple patterns (which can each have separate prefixes):
 
 ```ruby
-ES6ModuleTranspiler.prefix_pattern = [/^(controllers|models|views|helpers|routes|router|store)/, 'app']
+ES6ModuleTranspiler.add_prefix_pattern /^(controllers|models|views|helpers|routes|router|store)/, 'app'
+ES6ModuleTranspiler.add_prefix_pattern /^gui-helpers/, 'gui'
 ```
 
 This would match names that start with the pattern and prepend with
 `app/`. For example, `controllers/fooController` would now be named
-`app/controllers/fooController`.
+`app/controllers/fooController`, and `gui-helpers/bar` would now be
+named `gui/gui-helpers/bar`.
 
 Note the path is the *logical path* for the asset. For example, if the
 path to your asset is
