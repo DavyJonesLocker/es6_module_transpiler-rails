@@ -61,19 +61,20 @@ You can match module names based upon a pattern to apply a prefix to the
 name. You can add multiple patterns (which can each have separate prefixes):
 
 ```ruby
-ES6ModuleTranspiler.add_prefix_pattern /^(controllers|models|views|helpers|routes|router|store)/, 'app'
-ES6ModuleTranspiler.add_prefix_pattern /^gui-helpers/, 'gui'
+ES6ModuleTranspiler.add_prefix_pattern Regexp.new(File.join(Rails.root, 'app')), 'app'
+ES6ModuleTranspiler.add_prefix_pattern Regexp.new(File.join(Rails.root, 'config')), 'config'
 ```
 
 This would match names that start with the pattern and prepend with
-`app/`. For example, `controllers/fooController` would now be named
-`app/controllers/fooController`, and `gui-helpers/bar` would now be
-named `gui/gui-helpers/bar`.
+`app/` or `config/`. For example, `/home/user/app/controllers/fooController` would now be named
+`app/controllers/fooController`, and `/home/user/config/router` would now be
+named `config/router`.
 
-Note the path is the *logical path* for the asset. For example, if the
+Note the path is made up of the *root path* and the *logical path* for the asset. For example, if the
 path to your asset is
-`app/assets/javascripts/controllers/fooController.js.es6` the logical
-path is `controllers/fooController`.
+`/home/user/app/assets/javascripts/controllers/fooController.js.es6` the root path is `/home/user/app/assets/javascripts/` and the logical
+path is `controllers/fooController`. It is entirely dependent upon what
+Sprockets considers to be the mount point for the asset.
 
 ## Authors ##
 

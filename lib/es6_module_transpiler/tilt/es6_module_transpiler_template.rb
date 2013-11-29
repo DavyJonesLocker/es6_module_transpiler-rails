@@ -30,17 +30,17 @@ module Tilt
       source = <<-SOURCE
         var Compiler, compiler, output;
         Compiler = require("#{transpiler_path}").Compiler;
-        compiler = new Compiler(#{::JSON.generate(data, quirks_mode: true)}, '#{module_name(scope.logical_path)}');
+        compiler = new Compiler(#{::JSON.generate(data, quirks_mode: true)}, '#{module_name(scope.root_path, scope.logical_path)}');
         return output = compiler.#{compiler_method}();
       SOURCE
     end
 
-    def module_name(path)
-      if prefix = ES6ModuleTranspiler.lookup_prefix(path)
-        path = "#{prefix}/#{path}"
+    def module_name(root_path, logical_path)
+      if prefix = ES6ModuleTranspiler.lookup_prefix(File.join(root_path, logical_path))
+        path = File.join(prefix, logical_path)
+      else
+        logical_path
       end
-
-      path
     end
 
     def compiler_method

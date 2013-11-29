@@ -15,14 +15,6 @@ module ES6ModuleTranspiler
     @prefix_patterns ||= []
   end
 
-  def self.prefix_patterns=(patterns)
-    @prefix_patterns = patterns
-  end
-
-  def self.prefix_pattern=(pattern)
-    self.prefix_patterns = [pattern]
-  end
-
   def self.add_prefix_pattern(pattern, prefix)
     prefix_patterns << [pattern, prefix]
   end

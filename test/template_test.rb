@@ -2,7 +2,7 @@ require 'test_helper'
 require 'es6_module_transpiler/tilt'
 require 'execjs'
 
-Scope = Struct.new('Scope', :logical_path)
+Scope = Struct.new('Scope', :root_path, :logical_path)
 
 describe Tilt::ES6ModuleTranspilerTemplate do
   before do
@@ -14,12 +14,12 @@ var foo = function() {
 export default = foo;
 JS
     @source.rstrip!
-    @scope = Scope.new('foo')
+    @scope = Scope.new('', 'foo')
   end
 
   after do
     ES6ModuleTranspiler.compile_to = nil
-    ES6ModuleTranspiler.prefix_patterns = nil
+    ES6ModuleTranspiler.prefix_patterns.clear
   end
 
   it 'transpiles es6 into amd by default' do
@@ -78,7 +78,7 @@ JS
   end
 
   it 'transpiles with a prefixed name matching a pattern' do
-    ES6ModuleTranspiler.add_prefix_pattern /^controllers/, 'app'
+    ES6ModuleTranspiler.add_prefix_pattern /app/, 'app'
 
     expected = <<-JS
 define("app/controllers/foo", 
@@ -93,7 +93,7 @@ define("app/controllers/foo",
   });
 JS
     expected.rstrip!
-    @scope = Scope.new('controllers/foo')
+    @scope = Scope.new('app', 'controllers/foo')
     template = Tilt::ES6ModuleTranspilerTemplate.new { @source }
     template.render(@scope).must_equal expected
 
@@ -110,14 +110,14 @@ define("foo",
   });
 JS
     expected.rstrip!
-    @scope = Scope.new('foo')
+    @scope = Scope.new('', 'foo')
     template = Tilt::ES6ModuleTranspilerTemplate.new { @source }
     template.render(@scope).must_equal expected
   end
 
   it "can detect multiple prefix patterns" do
-    ES6ModuleTranspiler.add_prefix_pattern /^controllers/, 'app'
-    ES6ModuleTranspiler.add_prefix_pattern /^models/, 'app'
+    ES6ModuleTranspiler.add_prefix_pattern /app/, 'app'
+    ES6ModuleTranspiler.add_prefix_pattern /config/, 'config'
 
     expected = <<-JS
 define("app/models/foo", 
@@ -132,12 +132,12 @@ define("app/models/foo",
   });
 JS
     expected.rstrip!
-    @scope = Scope.new('models/foo')
+    @scope = Scope.new('/home/user/app', 'models/foo')
     template = Tilt::ES6ModuleTranspilerTemplate.new { @source }
     template.render(@scope).must_equal expected
 
     expected = <<-JS
-define("app/controllers/foo", 
+define("config/foo", 
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -149,28 +149,7 @@ define("app/controllers/foo",
   });
 JS
     expected.rstrip!
-    @scope = Scope.new('controllers/foo')
-    template = Tilt::ES6ModuleTranspilerTemplate.new { @source }
-    template.render(@scope).must_equal expected
-  end
-
-  it "allows the legacy ES6ModuleTranspiler.prefix_pattern= technique" do
-    ES6ModuleTranspiler.prefix_pattern = [/^controllers/, 'app']
-
-    expected = <<-JS
-define("app/controllers/foo", 
-  ["exports"],
-  function(__exports__) {
-    "use strict";
-    var foo = function() {
-      console.log('bar');
-    };
-
-    __exports__["default"] = foo;
-  });
-JS
-    expected.rstrip!
-    @scope = Scope.new('controllers/foo')
+    @scope = Scope.new('/home/users/config', 'foo')
     template = Tilt::ES6ModuleTranspilerTemplate.new { @source }
     template.render(@scope).must_equal expected
   end
