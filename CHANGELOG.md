@@ -1,3 +1,8 @@
+## 0.3.0
+
+* Added ES6ModuleTranspiler.transform for custom transforming of the
+  name
+
 ## 0.2.0
 
 * Accept multiple prefix pattern matching

@@ -24,4 +24,12 @@ module ES6ModuleTranspiler
 
     prefix
   end
+
+  def self.transform=(transform)
+    @transform = transform
+  end
+
+  def self.transform
+    @transform
+  end
 end

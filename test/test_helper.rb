@@ -1,4 +1,5 @@
 require 'bundler/setup'
+require 'byebug'
 require 'es6_module_transpiler/rails'
 
 if defined?(M)

@@ -36,11 +36,18 @@ module Tilt
     end
 
     def module_name(root_path, logical_path)
+      path = ''
       if prefix = ES6ModuleTranspiler.lookup_prefix(File.join(root_path, logical_path))
         path = File.join(prefix, logical_path)
       else
-        logical_path
+        path = logical_path
       end
+
+      if ES6ModuleTranspiler.transform
+        path = ES6ModuleTranspiler.transform.call(path)
+      end
+
+      path
     end
 
     def compiler_method

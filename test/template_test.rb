@@ -20,6 +20,7 @@ JS
   after do
     ES6ModuleTranspiler.compile_to = nil
     ES6ModuleTranspiler.prefix_patterns.clear
+    ES6ModuleTranspiler.transform = nil
   end
 
   it 'transpiles es6 into amd by default' do
@@ -150,6 +151,26 @@ define("config/foo",
 JS
     expected.rstrip!
     @scope = Scope.new('/home/users/config', 'foo')
+    template = Tilt::ES6ModuleTranspilerTemplate.new { @source }
+    template.render(@scope).must_equal expected
+  end
+
+  it 'transpiles es6 into amd by default' do
+    expected = <<-JS
+define("FOO", 
+  ["exports"],
+  function(__exports__) {
+    "use strict";
+    var foo = function() {
+      console.log('bar');
+    };
+
+    __exports__["default"] = foo;
+  });
+JS
+    expected.rstrip!
+
+    ES6ModuleTranspiler.transform = lambda { |name| name.upcase }
     template = Tilt::ES6ModuleTranspilerTemplate.new { @source }
     template.render(@scope).must_equal expected
   end
