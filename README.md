@@ -24,7 +24,7 @@ For example, `app/assets/javascripts/controllers/fooController.js.es6`
 
 ```js
 var fooController = function() {
-  console.log('fooController is in the house!')
+  console.log('fooController is in the house!');
 };
 
 export default = fooController;
@@ -38,7 +38,7 @@ define("controllers/fooController",
   function(__exports__) {
     "use strict";
     var fooController = function() {
-      console.log('fooController is in the house!')
+      console.log('fooController is in the house!');
     };
 
     __exports__["default"] = fooController;
