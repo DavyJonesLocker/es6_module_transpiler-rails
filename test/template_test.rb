@@ -7,6 +7,8 @@ Scope = Struct.new('Scope', :root_path, :logical_path)
 describe Tilt::ES6ModuleTranspilerTemplate do
   before do
     @source = <<-JS
+import dep from 'dep';
+
 var foo = function() {
   console.log('bar');
 };
@@ -26,9 +28,11 @@ JS
   it 'transpiles es6 into amd by default' do
     expected = <<-JS
 define("foo", 
-  ["exports"],
-  function(__exports__) {
+  ["dep","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
+    var dep = __dependency1__["default"];
+
     var foo = function() {
       console.log('bar');
     };
@@ -46,14 +50,16 @@ JS
     ES6ModuleTranspiler.compile_to = :globals
 
     expected = <<-JS
-(function(__exports__) {
+(function(__exports__, __dependency1__) {
   "use strict";
+  var dep = __dependency1__;
+
   var foo = function() {
     console.log('bar');
   };
 
   __exports__.foo = foo;
-})(window);
+})(window, window.dep);
 JS
     expected.rstrip!
 
@@ -66,6 +72,8 @@ JS
 
     expected = <<-JS
 "use strict";
+var dep = require("dep")["default"];
+
 var foo = function() {
   console.log('bar');
 };
@@ -83,9 +91,11 @@ JS
 
     expected = <<-JS
 define("app/controllers/foo", 
-  ["exports"],
-  function(__exports__) {
+  ["dep","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
+    var dep = __dependency1__["default"];
+
     var foo = function() {
       console.log('bar');
     };
@@ -100,9 +110,11 @@ JS
 
     expected = <<-JS
 define("foo", 
-  ["exports"],
-  function(__exports__) {
+  ["dep","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
+    var dep = __dependency1__["default"];
+
     var foo = function() {
       console.log('bar');
     };
@@ -122,9 +134,11 @@ JS
 
     expected = <<-JS
 define("app/models/foo", 
-  ["exports"],
-  function(__exports__) {
+  ["dep","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
+    var dep = __dependency1__["default"];
+
     var foo = function() {
       console.log('bar');
     };
@@ -139,9 +153,11 @@ JS
 
     expected = <<-JS
 define("config/foo", 
-  ["exports"],
-  function(__exports__) {
+  ["dep","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
+    var dep = __dependency1__["default"];
+
     var foo = function() {
       console.log('bar');
     };
@@ -158,9 +174,11 @@ JS
   it 'transpiles es6 into amd by default' do
     expected = <<-JS
 define("FOO", 
-  ["exports"],
-  function(__exports__) {
+  ["dep","exports"],
+  function(__dependency1__, __exports__) {
     "use strict";
+    var dep = __dependency1__["default"];
+
     var foo = function() {
       console.log('bar');
     };
@@ -173,5 +191,29 @@ JS
     ES6ModuleTranspiler.transform = lambda { |name| name.upcase }
     template = Tilt::ES6ModuleTranspilerTemplate.new { @source }
     template.render(@scope).must_equal expected
+  end
+  
+  it 'respects compiler_options' do
+    expected = <<-JS
+define("FOO", 
+  ["dep","exports"],
+  function(__dependency1__, __exports__) {
+    "use strict";
+    var dep = __dependency1__["default"] || __dependency1__;
+
+    var foo = function() {
+      console.log('bar');
+    };
+
+    __exports__["default"] = foo;
+  });
+JS
+    expected.rstrip!
+    
+    ES6ModuleTranspiler.compiler_options[:compatFix] = true;
+    ES6ModuleTranspiler.transform = lambda { |name| name.upcase }
+    template = Tilt::ES6ModuleTranspilerTemplate.new { @source }
+    template.render(@scope).must_equal expected
+    ES6ModuleTranspiler.compiler_options[:compatFix] = false;
   end
 end
