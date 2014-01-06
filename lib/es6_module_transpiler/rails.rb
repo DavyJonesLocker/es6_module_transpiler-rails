@@ -32,4 +32,8 @@ module ES6ModuleTranspiler
   def self.transform
     @transform
   end
+
+  def self.compiler_options
+    @compiler_options ||= {}
+  end
 end

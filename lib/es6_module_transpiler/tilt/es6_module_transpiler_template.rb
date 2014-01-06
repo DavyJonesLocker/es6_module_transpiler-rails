@@ -27,10 +27,10 @@ module Tilt
     end
 
     def generate_source(scope)
-      source = <<-SOURCE
+      <<-SOURCE
         var Compiler, compiler, output;
         Compiler = require("#{transpiler_path}").Compiler;
-        compiler = new Compiler(#{::JSON.generate(data, quirks_mode: true)}, '#{module_name(scope.root_path, scope.logical_path)}');
+        compiler = new Compiler(#{::JSON.generate(data, quirks_mode: true)}, '#{module_name(scope.root_path, scope.logical_path)}', #{compiler_options});
         return output = compiler.#{compiler_method}();
       SOURCE
     end
@@ -58,6 +58,10 @@ module Tilt
       }[ES6ModuleTranspiler.compile_to.to_sym]
 
       "to#{type}"
+    end
+
+    def compiler_options
+      ::JSON.generate(ES6ModuleTranspiler.compiler_options, quirks_mode: true)
     end
   end
 end

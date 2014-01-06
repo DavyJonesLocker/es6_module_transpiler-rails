@@ -55,6 +55,16 @@ ES6ModuleTranspiler.compile_to = :globals
 ES6ModuleTranspiler.compile_to = :cjs
 ```
 
+You may modify the `options` that are passed to the module compiler (i.e.
+[compatFix](https://github.com/square/es6-module-transpiler/blob/3e708b70dffeaf753307f9d5ecdf780fd6c7b74e/lib/amd_compiler.js#L68)) by 
+modifying the `compiler_options` hash:
+
+```ruby
+ES6ModuleTranspiler.compiler_options[:compatFix] = true;
+```
+
+The `compiler_options` hash is empty by default.
+
 ### Custom Module Prefix ###
 
 You can match module names based upon a pattern to apply a prefix to the
