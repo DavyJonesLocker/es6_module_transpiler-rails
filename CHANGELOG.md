@@ -1,3 +1,8 @@
+## 0.4.0
+
+* Added `ES6ModuleTranspiler.compiler_options` for passing options to the
+  module compiler.
+
 ## 0.3.0
 
 * Added ES6ModuleTranspiler.transform for custom transforming of the
