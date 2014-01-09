@@ -27,7 +27,7 @@ var fooController = function() {
   console.log('fooController is in the house!');
 };
 
-export default = fooController;
+export default fooController;
 ```
 
 will compile to `/assets/controllers/fooController.js`
