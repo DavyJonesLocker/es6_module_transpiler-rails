@@ -65,6 +65,24 @@ ES6ModuleTranspiler.compiler_options[:compatFix] = true;
 
 The `compiler_options` hash is empty by default.
 
+### Loading Modules ###
+
+When compiling to AMD or CommonJS, you'll need to be able to load the compiled result.  In the below example, we're using a minimal AMD loader called [loader.js](https://github.com/stefanpenner/loader.js).  Without a loader, you'll get an error like:
+
+```
+Uncaught ReferenceError: define is not defined
+```
+
+For example, in **application.js**:
+```
+//= require loader
+//= require_tree ./modules
+//= require main
+
+require('main');
+```
+Now `main.js.es6` is our entry point - from this file we can use the es6 module syntax to load any es6 modules in the `./modules` directory.
+
 ### Custom Module Prefix ###
 
 You can match module names based upon a pattern to apply a prefix to the
