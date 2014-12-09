@@ -22,4 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'tilt'
   spec.add_development_dependency 'sprockets', '> 2.0.0'
+  spec.add_development_dependency 'minitest'
 end
